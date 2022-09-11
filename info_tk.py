@@ -6,18 +6,18 @@ from pyzbar import pyzbar
 import pygsheets
 from playsound import playsound
 
-gc = pygsheets.authorize(service_file='./check-in.json')
-sht = gc.open_by_url('https://docs.google.com/spreadsheets/d/1r7AmqwXxw-MmAT0f-yYiqTnSieinz4tb7N0Onn0C0t8/edit#gid=163069971')
-wks = sht.worksheet_by_title("台大盃報到")
+gc = pygsheets.authorize(service_file='./checkin_2022.json')
+sht = gc.open_by_url('https://docs.google.com/spreadsheets/d/19nNC0c9lPmKGCyi0oIKJLwhsyiuXODuVpOfUJ3auOcE/edit#gid=1363448317')
+wks = sht.worksheet_by_title("疫苗陰性證明")
 gamename = ["公開男團", "公開女團", "公開男單", "公開女單", "歡樂雙打"]
-IDs = wks.get_col(2)
-names = wks.get_col(1)
-deps = wks.get_col(3)
-game1 = wks.get_col(4)
-game2 = wks.get_col(5)
-game3 = wks.get_col(6)
-game4 = wks.get_col(7)
-game5 = wks.get_col(8)
+IDs = wks.get_col(5)
+names = wks.get_col(3)
+deps = wks.get_col(4)
+game1 = wks.get_col(12)
+game2 = wks.get_col(13)
+game3 = wks.get_col(14)
+game4 = wks.get_col(15)
+game5 = wks.get_col(16)
 games = [game1, game2, game3, game4, game5]
 
 d = dict()
