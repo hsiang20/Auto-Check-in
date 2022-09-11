@@ -92,13 +92,13 @@ def yes():
     global IDcell
     vaccine_label['text'] = "有無疫苗/陰性證明：有"
     complete_label['text'] = "報到完成！"
-    wks.update_value(IDcell.neighbour((0, 8)).label, 'TRUE')
+    #wks.update_value(IDcell.neighbour((0, 8)).label, 'TRUE')
 
 def no():
     global IDcell
     vaccine_label['text'] = "有無疫苗/陰性證明：無"
     complete_label['text'] = "報到完成！"
-    wks.update_value(IDcell.neighbour((0, 8)).label, 'FALSE')
+    #wks.update_value(IDcell.neighbour((0, 8)).label, 'FALSE')
 
 def enter_id():
     global d
