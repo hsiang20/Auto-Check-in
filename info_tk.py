@@ -9,16 +9,24 @@ from playsound import playsound
 gc = pygsheets.authorize(service_file='./checkin_2022.json')
 sht = gc.open_by_url('https://docs.google.com/spreadsheets/d/19nNC0c9lPmKGCyi0oIKJLwhsyiuXODuVpOfUJ3auOcE/edit#gid=1363448317')
 wks = sht.worksheet_by_title("疫苗陰性證明")
-gamename = ["公開男團", "公開女團", "公開男單", "公開女單", "歡樂雙打"]
+# gamename = ["公開男團", "公開女團", "公開男單", "公開女單", "歡樂雙打"]
+gamename = ["新生男團", "新生女團", "新生男單", "新生女單"]
 IDs = wks.get_col(5)
 names = wks.get_col(3)
 deps = wks.get_col(4)
-game1 = wks.get_col(12)
-game2 = wks.get_col(13)
-game3 = wks.get_col(14)
-game4 = wks.get_col(15)
-game5 = wks.get_col(16)
-games = [game1, game2, game3, game4, game5]
+# game1 = wks.get_col(12)
+# game2 = wks.get_col(13)
+# game3 = wks.get_col(14)
+# game4 = wks.get_col(15)
+# game5 = wks.get_col(16)
+
+game1 = wks.get_col(18)
+game2 = wks.get_col(19)
+game3 = wks.get_col(20)
+game4 = wks.get_col(21)
+
+# games = [game1, game2, game3, game4, game5]
+games = [game1, game2, game3, game4]
 
 d = dict()
 for i in range(len(IDs)):
@@ -60,15 +68,15 @@ def open_camera():
             id = '學號：' + id
             dep = '系級：' + dep
             if contest_list[0]:
-                contest += "公開男團\n"
+                contest += "新生男團\n"
             if contest_list[1]:
-                contest += "公開女團\n"
+                contest += "新生女團\n"
             if contest_list[2]:
-                contest += "公開男單\n"
+                contest += "新生男單\n"
             if contest_list[3]:
-                contest += "公開女單\n"
-            if contest_list[4]:
-                contest += "歡樂雙打\n"
+                contest += "新生女單\n"
+            # if contest_list[4]:
+            #     contest += "歡樂雙打\n"
             name_label['text'] = name
             id_label['text'] = id
             dep_label['text'] = dep
@@ -82,7 +90,8 @@ def open_camera():
 
 
 window = tk.Tk()
-window.title('臺大盃報到')
+# window.title('臺大盃報到')
+window.title('新生盃報到')
 window.geometry('800x1200')
 
 f, name, id, dep, contest_list, idcell= fetch();
@@ -123,32 +132,33 @@ def enter_id():
         name = names[IDindex]
         dep = deps[IDindex]
         game = [False, False, False, False, False]
-        for i in range(5):
+        for i in range(4):
+        # for i in range(5):
             #if IDcell.neighbour((0, 2+i)).value == 'TRUE':
             if games[i][IDindex] == 'TRUE':
                 game[i] = True
-        IDcell = wks.cell('B' + str(IDindex+1))
+        IDcell = wks.cell('C' + str(IDindex+1))
         print(IDcell)
         print(f'姓名：{name}')
         print(f'系級：{dep}')
         for i in range(5):
             if game[i]:
                 print(gamename[i])
-        wks.update_value(IDcell.neighbour((0, 7)).label, 'TRUE')
+        wks.update_value(IDcell.neighbour((0, 19)).label, 'TRUE')
         contest='項目：\n\n'
         name = '姓名：' + name
         id = '學號：' + ID
         dep = '系級：' + dep
         if game[0]:
-            contest += "公開男團\n"
+            contest += "新生男團\n"
         if game[1]:
-            contest += "公開女團\n"
+            contest += "新生女團\n"
         if game[2]:
-            contest += "公開男單\n"
+            contest += "新生男單\n"
         if game[3]:
-            contest += "公開女單\n"
-        if game[4]:
-            contest += "歡樂雙打\n"
+            contest += "新生女單\n"
+        # if game[4]:
+        #     contest += "歡樂雙打\n"
         name_label['text'] = name
         id_label['text'] = id
         dep_label['text'] = dep
@@ -161,32 +171,32 @@ def enter_id():
         ID = IDs[IDindex]
         dep = deps[IDindex]
         game = [False, False, False, False, False]
-        for i in range(5):
-            #if IDcell.neighbour((0, 2+i)).value == 'TRUE':
+        for i in range(4):
+        # for i in range(5):
             if games[i][IDindex] == 'TRUE':
                 game[i] = True
-        IDcell = wks.cell('B' + str(IDindex+1))
+        IDcell = wks.cell('C' + str(IDindex+1))
         print(IDcell)
         print(f'姓名：{name}')
         print(f'系級：{dep}')
         for i in range(5):
             if game[i]:
                 print(gamename[i])
-        wks.update_value(IDcell.neighbour((0, 7)).label, 'TRUE')
+        wks.update_value(IDcell.neighbour((0, 19)).label, 'TRUE')
         contest='項目：\n\n'
         name = '姓名：' + name
         id = '學號：' + ID
         dep = '系級：' + dep
         if game[0]:
-            contest += "公開男團\n"
+            contest += "新生男團\n"
         if game[1]:
-            contest += "公開女團\n"
+            contest += "新生女團\n"
         if game[2]:
-            contest += "公開男單\n"
+            contest += "新生男單\n"
         if game[3]:
-            contest += "公開女單\n"
-        if game[4]:
-            contest += "歡樂雙打\n"
+            contest += "新生女單\n"
+        # if game[4]:
+        #     contest += "歡樂雙打\n"
         name_label['text'] = name
         id_label['text'] = id
         dep_label['text'] = dep
@@ -203,7 +213,6 @@ def read_barcodes(frame):
     IDcell = None
     for barcode in barcodes:
         playsound('beep.mp3')
-        #print("hi")
         x, y , w, h = barcode.rect
         barcode_info = barcode.data.decode('utf-8')
         cv2.rectangle(frame, (x, y),(x+w, y+h), (0, 255, 0), 2)
@@ -212,48 +221,41 @@ def read_barcodes(frame):
         cv2.putText(frame, barcode_info, (x + 6, y - 6), font, 2.0, (255, 255, 255), 1)
         ID = barcode_info[0:9].upper()
         print(ID)
-        # print(d)
 
         if ID not in d:
             return frame, False, ID, False, False, False
 
-        #findcell = wks.find(ID.upper())
 
-        #if len(findcell) == 0:
-        #    findcell = wks.find(ID.lower())
-        #if len(findcell) != 1:
-        #    print("found error")
         IDindex = d[ID]
 
-        IDcell = wks.cell('B' + str(IDindex+1))
+        IDcell = wks.cell('C' + str(IDindex+1))
 
-        #name = IDcell.neighbour("left").value
-        #department = IDcell.neighbour("right").value
         name = names[IDindex]
         department = deps[IDindex]
         game = [False, False, False, False, False]
-        for i in range(5):
-            #if IDcell.neighbour((0, 2+i)).value == 'TRUE':
+        for i in range(4):
+        # for i in range(5):
             if games[i][IDindex] == 'TRUE':
                 game[i] = True
         print(IDcell)
         print(f'姓名：{name}')
         print(f'系級：{department}')
-        for i in range(5):
+        for i in range(4):
+        # for i in range(5):
             if game[i]:
                 print(gamename[i])
-        wks.update_value(IDcell.neighbour((0, 7)).label, 'TRUE')
+        wks.update_value(IDcell.neighbour((0, 19)).label, 'TRUE')
     return frame, name, ID, department, game, IDcell
 
 name_entry_var = tk.StringVar()
-title_label = tk.Label(window, text="109學年度臺大盃報到", font=('標楷體', 48), height=2)
+title_label = tk.Label(window, text="111學年度新生盃報到", font=('標楷體', 48), height=2)
 name_label = tk.Label(window, text="姓名："+name, font=('標楷體', 36))
 id_label = tk.Label(window, text="學號："+id, font=('標楷體', 36))
 dep_label = tk.Label(window, text="系級："+dep, font=('標楷體', 36))
 contest_label = tk.Label(window, text=contest, font=('標楷體', 36),)
-vaccine_label = tk.Label(window, text='有無疫苗/陰性證明：', font=('標楷體', 36) )
-vaccine_bn_y = tk.Button(window, text='有', command=yes, background='green', highlightcolor='green', font=('標楷體', 36))
-vaccine_bn_n = tk.Button(window, text='無', command=no, background='blue', font=('標楷體', 36))
+# vaccine_label = tk.Label(window, text='有無疫苗/陰性證明：', font=('標楷體', 36) )
+# vaccine_bn_y = tk.Button(window, text='有', command=yes, background='green', highlightcolor='green', font=('標楷體', 36))
+# vaccine_bn_n = tk.Button(window, text='無', command=no, background='blue', font=('標楷體', 36))
 complete_label = tk.Label(window, text='', font=('標楷體', 36))
 complete_bn = tk.Button(window, text='開始掃碼', command=open_camera, background='yellow', font=('標楷體', 36))
 name_entry = tk.Entry(window, textvariable=name_entry_var, width=12, font=('標楷體', 36))
@@ -264,9 +266,9 @@ name_label.grid(row=1, column=0, sticky=tk.W, ipady=10, ipadx=80)
 id_label.grid(row=2, column=0, sticky=tk.W, ipady=10, ipadx=80)
 dep_label.grid(row=3, column=0, sticky=tk.W, ipady=10, ipadx=80)
 contest_label.grid(row=1, column=2, rowspan=3, sticky=tk.W)
-vaccine_label.grid(row=4, column=0, ipady=10, sticky=tk.W, ipadx=80)
-vaccine_bn_y.grid(row=5, column=0, columnspan=2)
-vaccine_bn_n.grid(row=5, column=2, columnspan=2, sticky=tk.W)
+# vaccine_label.grid(row=4, column=0, ipady=10, sticky=tk.W, ipadx=80)
+# vaccine_bn_y.grid(row=5, column=0, columnspan=2)
+# vaccine_bn_n.grid(row=5, column=2, columnspan=2, sticky=tk.W)
 complete_label.grid(row=6, columnspan=4, ipady=10)
 complete_bn.grid(row=7, columnspan=4)
 name_entry.grid(row=8, columnspan=2, sticky=tk.E, ipadx=50)
