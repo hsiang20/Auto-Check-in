@@ -39,6 +39,27 @@ camera = cv2.VideoCapture(0)
 ret, frame = camera.read()
 ret, frame = cv2.threshold(frame, 127, 255, cv2.THRESH_BINARY)
 
+def get_ID():
+    global d
+    global d_name
+    global wks
+    global deps
+    global game1, game2, game3, game4
+    global games
+    IDs = wks.get_col(5)
+    names = wks.get_col(3)
+    deps = wks.get_col(4)
+    game1 = wks.get_col(18)
+    game2 = wks.get_col(19)
+    game3 = wks.get_col(20)
+    game4 = wks.get_col(21)
+    for i in range(len(IDs)):
+        d[IDs[i].upper()] = i
+    for i in range(len(names)):
+        d_name[names[i]] = i
+    games = [game1, game2, game3, game4]
+
+
 def open_camera():
     global camera
     global ret
@@ -58,7 +79,7 @@ def open_camera():
             id_label['text'] = id
             dep_label['text'] = dep
             contest_label['text'] = contest
-            vaccine_label['text'] = '有無疫苗/陰性證明：'
+            # vaccine_label['text'] = '有無疫苗/陰性證明：'
             complete_label['text'] = ''
             break
            
@@ -81,7 +102,7 @@ def open_camera():
             id_label['text'] = id
             dep_label['text'] = dep
             contest_label['text'] = contest
-            vaccine_label['text'] = '有無疫苗/陰性證明：'
+            # vaccine_label['text'] = '有無疫苗/陰性證明：'
             complete_label['text'] = ''
             break
         
@@ -99,19 +120,20 @@ contest = ''
 
 def yes():
     global IDcell
-    vaccine_label['text'] = "有無疫苗/陰性證明：有"
+    # vaccine_label['text'] = "有無疫苗/陰性證明：有"
     complete_label['text'] = "報到完成！"
     #wks.update_value(IDcell.neighbour((0, 8)).label, 'TRUE')
 
 def no():
     global IDcell
-    vaccine_label['text'] = "有無疫苗/陰性證明：無"
+    # vaccine_label['text'] = "有無疫苗/陰性證明：無"
     complete_label['text'] = "報到完成！"
     #wks.update_value(IDcell.neighbour((0, 8)).label, 'FALSE')
 
 def enter_id():
     global d
     global IDcell
+    global IDs, names, deps
     name = name_entry_var.get().upper()
     name_entry.delete(0, 'end')
     if name not in names and name not in d:
@@ -123,7 +145,7 @@ def enter_id():
         id_label['text'] = id
         dep_label['text'] = dep
         contest_label['text'] = contest
-        vaccine_label['text'] = '有無疫苗/陰性證明：'
+        # vaccine_label['text'] = '有無疫苗/陰性證明：'
         complete_label['text'] = ''
     
     elif name in d:
@@ -163,7 +185,7 @@ def enter_id():
         id_label['text'] = id
         dep_label['text'] = dep
         contest_label['text'] = contest
-        vaccine_label['text'] = '有無疫苗/陰性證明：'
+        # vaccine_label['text'] = '有無疫苗/陰性證明：'
         complete_label['text'] = ''
         
     else:
@@ -201,12 +223,13 @@ def enter_id():
         id_label['text'] = id
         dep_label['text'] = dep
         contest_label['text'] = contest
-        vaccine_label['text'] = '有無疫苗/陰性證明：'
+        # vaccine_label['text'] = '有無疫苗/陰性證明：'
         complete_label['text'] = ''
 
 def read_barcodes(frame):
     global IDcell
     global d
+    global names, deps
     barcodes = pyzbar.decode(frame)
     name, ID, department = '', '', ''
     game = []
@@ -257,9 +280,10 @@ contest_label = tk.Label(window, text=contest, font=('標楷體', 36),)
 # vaccine_bn_y = tk.Button(window, text='有', command=yes, background='green', highlightcolor='green', font=('標楷體', 36))
 # vaccine_bn_n = tk.Button(window, text='無', command=no, background='blue', font=('標楷體', 36))
 complete_label = tk.Label(window, text='', font=('標楷體', 36))
-complete_bn = tk.Button(window, text='開始掃碼', command=open_camera, background='yellow', font=('標楷體', 36))
+complete_bn = tk.Button(window, text='開始掃碼', command=open_camera, background='green', font=('標楷體', 36))
 name_entry = tk.Entry(window, textvariable=name_entry_var, width=12, font=('標楷體', 36))
-name_bn = tk.Button(window, text='輸入', command=enter_id, font=('標楷體, 36'))
+name_bn = tk.Button(window, text='輸入', command=enter_id, font=('標楷體', 36))
+getID_bn = tk.Button(window, text='更新資料', command=get_ID, background="yellow", font=('標楷體', 36))
 
 title_label.grid(row=0, columnspan=4)
 name_label.grid(row=1, column=0, sticky=tk.W, ipady=10, ipadx=80)
@@ -271,8 +295,9 @@ contest_label.grid(row=1, column=2, rowspan=3, sticky=tk.W)
 # vaccine_bn_n.grid(row=5, column=2, columnspan=2, sticky=tk.W)
 complete_label.grid(row=6, columnspan=4, ipady=10)
 complete_bn.grid(row=7, columnspan=4)
-name_entry.grid(row=8, columnspan=2, sticky=tk.E, ipadx=50)
-name_bn.grid(row=8, columnspan=2, sticky=tk.E)
+name_entry.grid(row=9, columnspan=2, sticky=tk.E, ipadx=50)
+name_bn.grid(row=9, columnspan=2, sticky=tk.E)
+getID_bn.grid(row=8, columnspan=4)
 
 window.grid_columnconfigure(0, weight=1)
 window.grid_columnconfigure(1, weight=1)
